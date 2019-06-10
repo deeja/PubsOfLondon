@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
         integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 
-    <!-- <style>
+    <style>
         html,
         body {
             margin: 0;
@@ -32,26 +32,36 @@
             height: 100vh;
             width: 100vw;
         }
-    </style> -->
+
+        #search {
+            position: absolute;
+            z-index: 88;
+            background-color: white;
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- <div id="myMap"></div> -->
-    <label for="tags">Pub Search: </label>
-    <input class="searchBox" type="text" id="pub_search_box" placeholder="search">
+    <div id="search">
+        <label for="tags">Pub Search: </label>
+        <input class="searchBox" type="text" id="pub_search_box" placeholder="search">
+    </div>
+    <div id="myMap"></div>
     <script type="text/javascript">
 
 
-        // //Create an instance of the map control and set some options.
-        // var map = new atlas.Map('myMap', {
-        //     center: [0, 51.5],
-        //     zoom: 12,
-        //     language: 'en-UK',
-        //     authOptions: {
-        //         authType: 'subscriptionKey',
-        //         subscriptionKey: 'uwZGahhg3lH6jz3J_OG_7bsU60ADmnxJncF0NmIm9pA'
-        //     }
-        // });
+        //Create an instance of the map control and set some options.
+        var map = new atlas.Map('myMap', {
+            center: [0, 51.5],
+            zoom: 12,
+            language: 'en-UK',
+            authOptions: {
+                authType: 'subscriptionKey',
+                subscriptionKey: 'uwZGahhg3lH6jz3J_OG_7bsU60ADmnxJncF0NmIm9pA'
+            }
+        });
 
         var searchServiceName = "londonpubs";
         var indexName = "pubs";
@@ -81,7 +91,7 @@
                                 select: "name,photo, coordinates"
                             }),
                             success: function (data) {
-                                if (data.value && data.value.length > 0) {
+                                if (data.value && data.value.length > 0) {                                    
                                     response(data.value);
                                 }
                             }
@@ -94,6 +104,9 @@
                     },
                     select: function (event, ui) {
                         event.target.value = ui.item.name;
+                        var pubPosition = [ui.item.coordinates.coordinates[0], ui.item.coordinates.coordinates[1]];
+                        map.setCamera({  center: pubPosition, zoom: 15 });
+
                         console.log(event, ui)
                         return false;
                     }
