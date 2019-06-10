@@ -1,0 +1,40 @@
+{
+  "_id": "pubsoflondon",
+  "startUrl": [ "https://en.wikipedia.org/wiki/List_of_pubs_in_London" ],
+  "selectors": [
+    {
+      "id": "Link",
+      "type": "SelectorLink",
+      "parentSelectors": [ "_root" ],
+      "selector": "tr:nth-of-type(n+2) td:nth-of-type(2) a",
+      "multiple": true,
+      "delay": 0
+    },
+    {
+      "id": "Name",
+      "type": "SelectorText",
+      "parentSelectors": [ "Link" ],
+      "selector": "h1",
+      "multiple": false,
+      "regex": "",
+      "delay": 0
+    },
+    {
+      "id": "Coordinates",
+      "type": "SelectorText",
+      "parentSelectors": [ "Link" ],
+      "selector": "span.geo-dec",
+      "multiple": false,
+      "regex": "",
+      "delay": 0
+    },
+    {
+      "id": "Photo",
+      "type": "SelectorImage",
+      "parentSelectors": [ "Link" ],
+      "selector": "img.thumbimage",
+      "multiple": true,
+      "delay": 0
+    }
+  ]
+}
