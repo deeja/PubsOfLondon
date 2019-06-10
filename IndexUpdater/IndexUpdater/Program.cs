@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -63,10 +64,18 @@ namespace IndexUpdater
 
         private static void CreateIndex(string apiKey)
         {
+            var buildForType = FieldBuilder.BuildForType<IndexablePub>();
+
             var definition = new Index()
             {
                 Name = IndexName,
-                Fields = FieldBuilder.BuildForType<IndexablePub>()
+                Fields = buildForType,
+                CorsOptions = new CorsOptions(new List<string>(){"*"}),
+                Suggesters = new List<Suggester>()
+                {
+                    new Suggester("sg", "name")
+                }
+                
             };
 
             using (var searchServiceClient = CreateSearchServiceClient(apiKey))
