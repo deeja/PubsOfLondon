@@ -14,6 +14,7 @@
 
     <!-- Add references to the Azure Maps Map control JavaScript and CSS files. -->
     <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" type="text/css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css">
     <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -21,7 +22,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
         integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 
-    <style>
+    <!-- <style>
         html,
         body {
             margin: 0;
@@ -31,12 +32,12 @@
             height: 100vh;
             width: 100vw;
         }
-    </style> 
+    </style> -->
 </head>
 
 <body>
-    <div id="myMap"></div>
-     <label for="tags">Pub Search: </label>
+    <!-- <div id="myMap"></div> -->
+    <label for="tags">Pub Search: </label>
     <input class="searchBox" type="text" id="pub_search_box" placeholder="search">
     <script type="text/javascript">
 
@@ -61,37 +62,48 @@
         var autocompleteUri = "https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/docs/autocomplete?api-version=" + apiVersion;
 
         $(function () {
-            $("#pub_search_box").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        type: "POST",
-                        url: suggestUri,
-                        dataType: "json",
-                        headers: {
-                            "api-key": searchServiceApiKey,
-                            "Content-Type": "application/json"
-                        },
-                        data: JSON.stringify({
-                            top: 5,
-                            fuzzy: true,
-                            suggesterName: "sg",
-                            search: request.term
-                        }),
-                        success: function (data) {
-                            if (data.value && data.value.length > 0) {
-                                response(data.value.map(x => x["@search.text"]));
+            $("#pub_search_box")
+                .autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            type: "POST",
+                            url: suggestUri,
+                            dataType: "json",
+                            headers: {
+                                "api-key": searchServiceApiKey,
+                                "Content-Type": "application/json"
+                            },
+                            data: JSON.stringify({
+                                top: 3,
+                                fuzzy: true,
+                                suggesterName: "sg",
+                                search: request.term,
+                                select: "name,photo, coordinates"
+                            }),
+                            success: function (data) {
+                                if (data.value && data.value.length > 0) {
+                                    response(data.value);
+                                }
                             }
-                        }
-                    });
-                },
-                minLength: 3,
-                position: {
-                    my: "left top",
-                    at: "left-23 bottom+10"
+                        })
+                    },
+                    minLength: 2,
+                    position: {
+                        my: "left top",
+                        at: "left-23 bottom+10"
+                    },
+                    select: function (event, ui) {
+                        event.target.value = ui.item.name;
+                        console.log(event, ui)
+                        return false;
+                    }
+                })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    console.log(ul, item);
+                    return $("<li>").append("<figure><figcaption>" + item.name + "</figcaption><img style='height: 150px' src='https://" + item.photo + "'/></figure>").appendTo(ul);
                 }
-            });
-        });
 
+        });
 
 
         // var geoSuccess = function (position) {
