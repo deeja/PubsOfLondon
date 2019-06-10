@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+
+    <meta charset="utf-8">
+
+    <!-- Ensures that IE and Edge uses the latest version and doesn't emulate an older version -->
+    <meta http-equiv="x-ua-compatible" content="IE=Edge">
+
+    <!-- Ensures the web page looks good on all screen sizes. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Add references to the Azure Maps Map control JavaScript and CSS files. -->
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" type="text/css">
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+        }
+
+        #myMap {
+            height: 100vh;
+            width: 100vw;
+        }
+    </style> 
+</head>
+
+<body>
+    <div id="myMap"></div>
+     <label for="tags">Pub Search: </label>
+    <input class="searchBox" type="text" id="pub_search_box" placeholder="search">
+    <script type="text/javascript">
+
+
+        // //Create an instance of the map control and set some options.
+        // var map = new atlas.Map('myMap', {
+        //     center: [0, 51.5],
+        //     zoom: 12,
+        //     language: 'en-UK',
+        //     authOptions: {
+        //         authType: 'subscriptionKey',
+        //         subscriptionKey: 'uwZGahhg3lH6jz3J_OG_7bsU60ADmnxJncF0NmIm9pA'
+        //     }
+        // });
+
+        var searchServiceName = "londonpubs";
+        var indexName = "pubs";
+        var apiVersion = "2019-05-06";
+        var searchServiceApiKey = "55056759F81349EDF60D4274FA4C32DB";
+
+        var suggestUri = "https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/docs/suggest?api-version=" + apiVersion;
+        var autocompleteUri = "https://" + searchServiceName + ".search.windows.net/indexes/" + indexName + "/docs/autocomplete?api-version=" + apiVersion;
+
+        $(function () {
+            $("#pub_search_box").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: "POST",
+                        url: suggestUri,
+                        dataType: "json",
+                        headers: {
+                            "api-key": searchServiceApiKey,
+                            "Content-Type": "application/json"
+                        },
+                        data: JSON.stringify({
+                            top: 5,
+                            fuzzy: true,
+                            suggesterName: "sg",
+                            search: request.term
+                        }),
+                        success: function (data) {
+                            if (data.value && data.value.length > 0) {
+                                response(data.value.map(x => x["@search.text"]));
+                            }
+                        }
+                    });
+                },
+                minLength: 3,
+                position: {
+                    my: "left top",
+                    at: "left-23 bottom+10"
+                }
+            });
+        });
+
+
+
+        // var geoSuccess = function (position) {
+        //     startPos = position;
+        //     latitude = startPos.coords.latitude;
+        //     longitude = startPos.coords.longitude;
+        //     map.center = [longitude, latitude];
+        // };
+        // var geoError = function (error) {
+        //     console.log('Error occurred. Error code: ' + error.code);
+        //     // error.code can be:
+        //     //   0: unknown error
+        //     //   1: permission denied
+        //     //   2: position unavailable (error response from location provider)
+        //     //   3: timed out
+        // };
+
+        // navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+
+    </script>
+
+
+</body>
+
+</html>
