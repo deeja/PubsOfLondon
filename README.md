@@ -1,4 +1,9 @@
-# Pubs Of London - My testing area for Azure Search, Azure Maps and Azure Static Websites
+# Pubs Of London
+My testing area for 
+- [Azure Search](https://azure.microsoft.com/en-gb/services/search/)
+- [Azure Maps](https://azure.microsoft.com/en-us/services/azure-maps/) 
+- [Azure Static Websites](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website)
+
 Hosted (unless changed): https://londonpubs.z33.web.core.windows.net/
 
 ## The Plan
