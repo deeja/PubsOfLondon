@@ -4,11 +4,15 @@ My testing area for
 - [Azure Maps](https://azure.microsoft.com/en-us/services/azure-maps/) 
 - [Azure Static Websites](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website)
 
-Hosted (unless changed): https://londonpubs.z33.web.core.windows.net/
-
 ## The Plan
 - Take this [page from wikipedia](https://en.wikipedia.org/wiki/List_of_pubs_in_London)
 - Turn it into a website
+
+## Current Features
+- [Fuzzy search](https://en.wikipedia.org/wiki/Approximate_string_matching) on pub names
+- Click to locate on map
+
+![D:\development\PubsOfLondon\z_screenshots\Screenshot.png]
 
 ### Scrape
 - WebScraper:  https://www.webscraper.io/cloud-scraper
