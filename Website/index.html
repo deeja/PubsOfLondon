@@ -2,9 +2,28 @@
 <html>
 
 <head>
-    <title></title>
+    <title>Find London Pubs</title>
 
     <meta charset="utf-8">
+
+    <!-- From the favicon generator - because how can a site not have a favicon? -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- Ensures that IE and Edge uses the latest version and doesn't emulate an older version -->
     <meta http-equiv="x-ua-compatible" content="IE=Edge">
@@ -33,12 +52,19 @@
             width: 100vw;
         }
 
+        #pub_search_box {
+            padding: 3px;
+            width: 250px;
+        }
+
         #search {
             position: absolute;
             z-index: 88;
-            background-color: white;
+            background-color: lightblue;
             margin: 10px;
             padding: 10px;
+            border: 1px gray solid;
+            font-family: sans-serif;
         }
     </style>
 </head>
@@ -46,7 +72,7 @@
 <body>
     <div id="search">
         <label for="tags">Pub Search: </label>
-        <input class="searchBox" type="text" id="pub_search_box" placeholder="search">
+        <input class="searchBox" type="text" id="pub_search_box" placeholder="Search pubs by name">
     </div>
     <div id="myMap"></div>
     <script type="text/javascript">
@@ -91,7 +117,7 @@
                                 select: "name,photo, coordinates"
                             }),
                             success: function (data) {
-                                if (data.value && data.value.length > 0) {                                    
+                                if (data.value && data.value.length > 0) {
                                     response(data.value);
                                 }
                             }
@@ -105,37 +131,28 @@
                     select: function (event, ui) {
                         event.target.value = ui.item.name;
                         var pubPosition = [ui.item.coordinates.coordinates[0], ui.item.coordinates.coordinates[1]];
-                        map.setCamera({  center: pubPosition, zoom: 15 });
+                        map.setCamera({ center: pubPosition, zoom: 15 });
 
-                        console.log(event, ui)
+                        var marker = new atlas.HtmlMarker({
+                            color: 'DodgerBlue',
+                            text: ui.item.name,
+                            position: pubPosition,
+                         
+                        });
+
+                        map.markers.add(marker);
+
+
+
                         return false;
                     }
                 })
                 .autocomplete("instance")._renderItem = function (ul, item) {
                     console.log(ul, item);
-                    return $("<li>").append("<figure><figcaption>" + item.name + "</figcaption><img style='height: 150px' src='https://" + item.photo + "'/></figure>").appendTo(ul);
-                }
-
+                    var photo = item.photo ? "<img style='height: 150px' src='https://" + item.photo + "'/>" : "";
+                    return $("<li>").append("<figure><figcaption>" + item.name + "</figcaption>"+photo+"</figure>").appendTo(ul);
+                }    
         });
-
-
-        // var geoSuccess = function (position) {
-        //     startPos = position;
-        //     latitude = startPos.coords.latitude;
-        //     longitude = startPos.coords.longitude;
-        //     map.center = [longitude, latitude];
-        // };
-        // var geoError = function (error) {
-        //     console.log('Error occurred. Error code: ' + error.code);
-        //     // error.code can be:
-        //     //   0: unknown error
-        //     //   1: permission denied
-        //     //   2: position unavailable (error response from location provider)
-        //     //   3: timed out
-        // };
-
-        // navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-
     </script>
 
 
