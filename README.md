@@ -6,13 +6,13 @@ My testing area for
 
 ## The Plan
 - Take this [page from wikipedia](https://en.wikipedia.org/wiki/List_of_pubs_in_London)
-- Turn it into a website
+- Turn it into a website - https://londonpubs.z33.web.core.windows.net/
 
 ## Current Features
 - [Fuzzy search](https://en.wikipedia.org/wiki/Approximate_string_matching) on pub names
 - Click to locate on map
 
-![D:\development\PubsOfLondon\z_screenshots\Screenshot.png]
+!(screenshot)[z_screenshots/Screenshot.png]
 
 ### Scrape
 - WebScraper:  https://www.webscraper.io/cloud-scraper
