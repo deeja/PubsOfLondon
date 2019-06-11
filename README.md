@@ -11,8 +11,9 @@ Hosted (unless changed): https://londonpubs.z33.web.core.windows.net/
 - Turn it into a website
 
 ### Scrape
-WebScraper:  https://www.webscraper.io/cloud-scraper
-[Configuration for the scraper](Scraper/ScraperConfig.json)
+- WebScraper:  https://www.webscraper.io/cloud-scraper
+- [Configuration for the scraper](Scraper/ScraperConfig.json)
+
 Once complete, export the data to [PubsOfLondon.csv](IndexUpdater/pubsoflondon.csv)
 
 ### Push to the Index
