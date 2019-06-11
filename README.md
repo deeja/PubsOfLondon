@@ -10,9 +10,9 @@ My testing area for
 
 ## Current Features
 - [Fuzzy search](https://en.wikipedia.org/wiki/Approximate_string_matching) on pub names
-- Click to locate on map
+- Click or enter on pub to locate on map
 
-!(screenshot)[z_screenshots/Screenshot.png]
+![screenshot](z_screenshots/Screenshot.png "Screenshot of the website")
 
 ### Scrape
 - WebScraper:  https://www.webscraper.io/cloud-scraper
