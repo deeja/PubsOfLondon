@@ -1,4 +1,5 @@
-# PubsOfLondon
+# Pubs Of London
+Hosted (unless changed): https://londonpubs.z33.web.core.windows.net/
 
 ## The Plan
 - Take this [page from wikipedia](https://en.wikipedia.org/wiki/List_of_pubs_in_London)
