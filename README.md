@@ -6,7 +6,7 @@ My testing area for
 
 ## The Plan
 - Take this [page from wikipedia](https://en.wikipedia.org/wiki/List_of_pubs_in_London)
-- Turn it into a website - https://londonpubs.z33.web.core.windows.net/
+- Turn it into a website 
 
 ## Current Features
 - [Fuzzy search](https://en.wikipedia.org/wiki/Approximate_string_matching) on pub names
